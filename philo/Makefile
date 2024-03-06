@@ -5,11 +5,11 @@ NAME	:= philo
 CC		:= cc
 CFLAGS	:= -Wextra -Wall -Werror
 
-SRCDIR  := ./philo
+SRC_DIR  := .
+OBJ_DIR  := .
 			
-SRCS	:= $(shell find ./philo -iname "*.c")
+SRCS	:= $(SRC_DIR)/philo.c
 OBJS	:= ${SRCS:.c=.o}
-HEADER  := ./philo/philo.h
 
 %.o: %.c
 	@$(CC) $(CFLAGS) -o $@ -c $< && printf "Compiling: $(notdir $<)\n"
@@ -23,7 +23,7 @@ clean:
 	@rm -rf $(OBJS)
 
 fclean: clean
-	@rm -f $(NAME)
+	@rm -rf $(NAME)
 
 re: fclean all
 
