@@ -6,9 +6,11 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 12:10:26 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/03/08 12:51:24 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/03/08 17:27:15 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "philo.h"
 
 size_t	ft_strlen(char *str)
 {
