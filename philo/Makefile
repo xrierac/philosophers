@@ -8,7 +8,7 @@ CFLAGS	:= -Wextra -Wall -Werror
 SRC_DIR  := .
 OBJ_DIR  := .
 			
-SRCS	:= $(SRC_DIR)/philo.c
+SRCS	:= $(SRC_DIR)/main.c $(SRC_DIR)/parsing.c $(SRC_DIR)/parsing_utils.c $(SRC_DIR)/main_utils.c
 OBJS	:= ${SRCS:.c=.o}
 
 %.o: %.c
