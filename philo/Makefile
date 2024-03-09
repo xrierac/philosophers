@@ -5,7 +5,8 @@ NAME	:= philo
 CC		:= cc
 CFLAGS	:= -Wextra -Wall -Werror
 
-SRC_DIR  := .
+INC_DIR  := ./inc
+SRC_DIR  := ./src
 OBJ_DIR  := .
 			
 SRCS	:= $(SRC_DIR)/main.c $(SRC_DIR)/parsing.c $(SRC_DIR)/parsing_utils.c $(SRC_DIR)/main_utils.c
