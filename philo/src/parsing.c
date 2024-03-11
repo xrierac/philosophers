@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 11:56:03 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/03/09 17:03:42 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/03/11 12:31:53 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,17 @@ static long	get_parse(char *str)
 	return (nbr);
 }
 
-int	parse_input(char *argv[], int argc, t_table *table)
+int	parse_input(char *argv[], int argc, t_sim *sim)
 {
-	table->nbrphilo = get_parse(argv[1]);
-	table->tdie = get_parse(argv[2]);
-	table->teat = get_parse(argv[3]);
-	table->tsleep = get_parse(argv[4]);
-	table->nbreat = -1;
+	sim->n_phil = get_parse(argv[1]);
+	sim->tdie = get_parse(argv[2]);
+	sim->teat = get_parse(argv[3]);
+	sim->tsleep = get_parse(argv[4]);
+	sim->n_eat = -1;
 	if (argc == 6)
-		table->nbreat = get_parse(argv[5]);
-	if (table->nbrphilo <= 0 || table->tdie < 0 || table->teat < 0 || 
-			table->tsleep < 0 || table->nbreat < -1)
+		sim->n_eat = get_parse(argv[5]);
+	if (sim->n_phil <= 0 || sim->tdie < 0 || sim->teat < 0 || 
+			sim->tsleep < 0 || sim->n_eat < -1)
 		return (-1);
 	return (0);
 }
