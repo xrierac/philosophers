@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 16:39:52 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/03/09 17:04:26 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/03/11 12:33:06 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,26 +17,36 @@
 # include <unistd.h>
 # include <limits.h>
 # include <sys/time.h>
+# include <pthread.h>
 
 typedef struct s_philo
 {
+	pthread_t	thread;
+	int			id;
 }	t_philo;
 
-typedef struct s_table
+typedef struct s_sim
 {
-	int	nbrphilo;
-	int	tdie;
-	int	teat;
-	int	tsleep;
-	int	nbreat;
-}	t_table;
+	int		n_phil;
+	int		tdie;
+	int		teat;
+	int		tsleep;
+	int		n_eat;
+	t_philo	**phteam;
+}	t_sim;
+
+//Initialize//
+t_sim	*init_sim(int argc, char *argv[]);
 
 //Parsing//
-int		parse_input(char *argv[], int argc, t_table *table);
+int		parse_input(char *argv[], int argc, t_sim *sim);
 size_t	ft_strlen(char *str);
 long	ft_atol(char *str);
 
 //Utils//
 void	ft_putstr_fd(char *s, int fd);
+
+//Exit//
+void	exit_error(char *str, t_sim *sim);
 
 #endif
