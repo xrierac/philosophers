@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 16:39:52 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/03/11 12:33:06 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/03/11 16:22:57 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,13 @@
 # include <limits.h>
 # include <sys/time.h>
 # include <pthread.h>
+# include <stdio.h>
 
 typedef struct s_philo
 {
 	pthread_t	thread;
 	int			id;
+	int			meals;
 }	t_philo;
 
 typedef struct s_sim
@@ -32,6 +34,7 @@ typedef struct s_sim
 	int		teat;
 	int		tsleep;
 	int		n_eat;
+	int		start_time;
 	t_philo	**phteam;
 }	t_sim;
 
