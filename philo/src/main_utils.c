@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 12:04:08 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/03/12 12:25:27 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/03/12 13:43:11 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_sim	*free_sim(t_sim *sim)
 	{
 		while (sim->phteam[++i])
 		{
-			pthread_mutex_destroy
+			pthread_mutex_destroy(&sim->phteam[i]->meal_lock);
 			free(sim->phteam[i]);
 		}
 		free(sim->phteam);
