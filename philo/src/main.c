@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 16:41:00 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/03/11 12:30:53 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/03/12 12:07:28 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,13 @@
 
 void	exit_success(t_sim *sim)
 {
-	free(sim);
+	free_sim(sim);
 	exit(EXIT_SUCCESS);
 }
 
 void	exit_error(char *str, t_sim *sim)
 {
-	if (sim != NULL)
-		free(sim);
+	free_sim(sim);
 	ft_putstr_fd("Error: ", 2);
 	ft_putstr_fd(str, 2);
 	exit(EXIT_FAILURE);
