@@ -6,56 +6,61 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:57:19 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/03/12 11:54:51 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/03/13 11:13:39 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
 
-t_sim	*init_sim(int argc, char *argv[])
+t_table	*init_table(int argc, char *argv[])
 {
-	t_sim	*sim;
+	t_table	*table;
 
-	sim = malloc(sizeof(t_sim));
-	if (!sim)
-		exit_error("Memory allocation failed\n", sim);
-	if (parse_input(argv, argc, sim) < 0)
-		exit_error("Wrong argument\n", sim);
-	sim->phteam = init_team(sim);
-	return (sim);
+	table = malloc(sizeof(t_table));
+	if (!table)
+		exit_error(ERR_MALLOC, table);
+	if (parse_input(argv, argc, table) < 0)
+		exit_error(ERR_ARG, table);
+	table->philos = sit_philos(table);
+	return (table);
 }
 
-t_philo **init_team(t_sim *sim)
+t_philo **sit_philos(t_table *table)
 {
-	t_philo	**phteam;
+	t_philo	**philos;
 	t_philo	*philo;
 	int		i;
 
-	phteam = malloc(sizeof(t_philo) * sim->n_phil);
-	if (!phteam)
-		exit_error("Memory allocation failed\n", sim);
+	philos = malloc(sizeof(t_philo) * table->n_phil);
+	if (!philos)
+		exit_error(ERR_MALLOC, table);
 	i = -1;
-	while (++i < sim->n_phil)
+	while (++i < table->n_phil)
 	{
 		philo = malloc(sizeof(t_philo));
 		if (!philo)
-			exit_error("Memory allocation failed\n", sim);
-		phteam[i] = philo;
-		pthread_mutex_init(&phteam[i]->meal_lock, NULL);
-		phteam[i]->id = i + 1;
+			exit_error(ERR_MALLOC, table);
+		philos[i] = philo;
 	}
-	return (phteam);
+	init_philos(table);
+	return (philos);
 }
-/*
-t_philo	*init_philo(t_sim *sim)
+
+void	init_philos(t_table *table)
 {
 	int	i;
 
-	i = -1;
-	while (++i < sim->n_phil)
+	i = 0;
+	while (table->philos[i])
 	{
-		if (pthread_create(&sim->phteam[i]->thread, NULL, FUNCTION, NULL) != 0)
-			exit_error("Problem creating new thread\n", sim);
+		table->philos[i]->id = i + 1;
+		table->philos[i]->n_meals = 0;
+		table->philos[i]->forks[0] = i;
+		table->philos[i]->forks[1] = i + 1;
+		if (i == 0)
+			table->philos[i]->forks[0] = table->n_phil;
+		if (i == table->n_phil - 1)
+			table->philos[i]->forks[1] = 1;
+		i++;
 	}
 }
-*/
