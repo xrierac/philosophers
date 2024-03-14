@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:57:19 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/03/14 12:35:34 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/03/14 15:46:56 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,11 @@ int	init_table(int argc, char *argv[], t_table *table)
 	table->philos = NULL;
 	if (parse_input(argv, argc, table) < 0)
 		return (ft_exit(ERR_ARG, table, ERROR));
-	return (sit_philos(table));
+	if (sit_philos(table) < 0)
+		return (ft_exit(ERR_MALLOC, table, ERROR));
+	if (init_mutexes(table) != 0)
+		return (ft_exit(ERR_MUTEX_I, table, ERROR));
+	return (0);
 }
 
 int	sit_philos(t_table *table)
@@ -26,13 +30,13 @@ int	sit_philos(t_table *table)
 
 	table->philos = malloc(sizeof(t_philo *) * table->n_phil);
 	if (!table->philos)
-		return (ft_exit(ERR_MALLOC, table, ERROR));
+		return (-1);
 	i = -1;
 	while (++i < table->n_phil)
 	{
 		table->philos[i] = malloc(sizeof(t_philo));
 		if (!table->philos[i])
-			return (ft_exit(ERR_MALLOC, table, ERROR));
+			return (-1);
 	}
 	init_philos(table);
 	return (0);

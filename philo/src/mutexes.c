@@ -1,32 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   mutexes.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/06 16:41:00 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/03/14 15:56:36 by xriera-c         ###   ########.fr       */
+/*   Created: 2024/03/14 15:14:48 by xriera-c          #+#    #+#             */
+/*   Updated: 2024/03/14 15:55:10 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
 
-/*
-void	start_meal(t_table *table)
+int	init_mutexes(t_table *table)
 {
-	mutexes(table, INIT);
+	int	i;
 
+	i = 0;
+	while (i < table->n_phil)
+	{
+		if (pthread_mutex_init(&table->philos[i]->meal_lock, NULL))
+				return (destroy_mutexes(table, i));
+		i++;
+	}
+	return (0);
 }
-*/
-int	main(int argc, char *argv[])
-{
-	t_table	table;
 
-	if (argc != 5 && argc != 6)
-		return (ft_exit(ERR_ARG_NUM, NULL, ERROR));
-	if (init_table(argc, argv, &table) == -1)
-		return (-1);
-	destroy_mutexes(&table, table.n_phil - 1);
-	return (ft_exit(NULL, &table, SUCCESS));
+int	destroy_mutexes(t_table *table, int index)
+{
+	while (index > -1)
+	{
+		if (pthread_mutex_destroy(&table->philos[index]->meal_lock))
+			return (-2);
+		index--;
+	}
+	return (1);
 }
