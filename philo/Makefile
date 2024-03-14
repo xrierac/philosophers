@@ -9,7 +9,7 @@ INC_DIR  := ./inc
 SRC_DIR  := ./src
 OBJ_DIR  := .
 			
-SRCS	:= $(SRC_DIR)/main.c $(SRC_DIR)/parsing.c $(SRC_DIR)/parsing_utils.c $(SRC_DIR)/main_utils.c $(SRC_DIR)/init.c $(SRC_DIR)/exit.c $(SRC_DIR)/mutexes.c
+SRCS	:= $(SRC_DIR)/main.c $(SRC_DIR)/parsing.c $(SRC_DIR)/parsing_utils.c $(SRC_DIR)/main_utils.c $(SRC_DIR)/init.c $(SRC_DIR)/exit.c $(SRC_DIR)/mutexes.c $(SRC_DIR)/threads.c $(SRC_DIR)/time.c $(SRC_DIR)/routines.c
 OBJS	:= ${SRCS:.c=.o}
 
 %.o: %.c

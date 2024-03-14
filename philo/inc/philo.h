@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 16:39:52 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/03/14 15:46:31 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/03/14 16:46:21 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 # define ERR_ARG_NUM	"Invalid number of arguments\n"
 # define ERR_ARG		"Invalid argument\n"
 # define ERR_MUTEX_I	"Mutex initialization failed\n"
+# define ERR_TIME		"Time function failed\n"
+# define ERR_COL_THR	"Closing threads failed\n"
 
 typedef struct s_philo
 {
@@ -68,13 +70,15 @@ size_t	ft_strlen(char *str);
 long	ft_atol(char *str);
 
 //Mutexes//
-int	init_mutexes(t_table *table);
-int	destroy_mutexes(t_table *table, int index);
+int		init_mutexes(t_table *table);
+int		destroy_mutexes(t_table *table, int index);
 
-//Routines//
-void	philo_routine(void *arg);
+//Threads//
+int		start_philo(t_table *table);
+void	*philo_routine(void *arg);
 
 //Utils//
+int		get_time(void);
 void	ft_putstr_fd(char *s, int fd);
 t_table	*free_table(t_table *table);
 
