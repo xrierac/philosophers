@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 09:53:00 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/03/14 11:14:26 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/03/14 12:35:36 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,13 @@ int	ft_exit(char *s, t_table *table, t_status status)
 	i = -1;
 	if (status == ERROR)
 		ft_putstr_fd(s, 2);
-	if (table->philos)
+	if (status == SUCCESS)
+		ft_putstr_fd("Success\n", 1);
+	if (table && table->philos)
 	{
-		while (table->philos[++i])
+		while (++i < table->n_phil)
 			free(table->philos[i]);
 		free(table->philos);
 	}
-	//free(table);
 	return (status);
 }

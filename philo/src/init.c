@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:57:19 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/03/14 11:12:16 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/03/14 12:35:34 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 
 int	init_table(int argc, char *argv[], t_table *table)
 {
-	table = malloc(sizeof(t_table));
-	if (!table)
-		return (ft_exit(ERR_MALLOC, NULL, ERROR));
 	table->philos = NULL;
 	if (parse_input(argv, argc, table) < 0)
 		return (ft_exit(ERR_ARG, table, ERROR));
