@@ -6,52 +6,47 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:57:19 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/03/13 11:13:39 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/03/14 11:12:16 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
 
-t_table	*init_table(int argc, char *argv[])
+int	init_table(int argc, char *argv[], t_table *table)
 {
-	t_table	*table;
-
 	table = malloc(sizeof(t_table));
 	if (!table)
-		exit_error(ERR_MALLOC, table);
+		return (ft_exit(ERR_MALLOC, NULL, ERROR));
+	table->philos = NULL;
 	if (parse_input(argv, argc, table) < 0)
-		exit_error(ERR_ARG, table);
-	table->philos = sit_philos(table);
-	return (table);
+		return (ft_exit(ERR_ARG, table, ERROR));
+	return (sit_philos(table));
 }
 
-t_philo **sit_philos(t_table *table)
+int	sit_philos(t_table *table)
 {
-	t_philo	**philos;
-	t_philo	*philo;
 	int		i;
 
-	philos = malloc(sizeof(t_philo) * table->n_phil);
-	if (!philos)
-		exit_error(ERR_MALLOC, table);
+	table->philos = malloc(sizeof(t_philo *) * table->n_phil);
+	if (!table->philos)
+		return (ft_exit(ERR_MALLOC, table, ERROR));
 	i = -1;
 	while (++i < table->n_phil)
 	{
-		philo = malloc(sizeof(t_philo));
-		if (!philo)
-			exit_error(ERR_MALLOC, table);
-		philos[i] = philo;
+		table->philos[i] = malloc(sizeof(t_philo));
+		if (!table->philos[i])
+			return (ft_exit(ERR_MALLOC, table, ERROR));
 	}
 	init_philos(table);
-	return (philos);
+	return (0);
 }
 
 void	init_philos(t_table *table)
 {
 	int	i;
 
-	i = 0;
-	while (table->philos[i])
+	i = -1;
+	while (++i < table->n_phil)
 	{
 		table->philos[i]->id = i + 1;
 		table->philos[i]->n_meals = 0;
@@ -61,6 +56,5 @@ void	init_philos(t_table *table)
 			table->philos[i]->forks[0] = table->n_phil;
 		if (i == table->n_phil - 1)
 			table->philos[i]->forks[1] = 1;
-		i++;
 	}
 }
