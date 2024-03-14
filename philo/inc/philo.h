@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 16:39:52 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/03/14 11:04:40 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/03/14 15:46:31 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # define ERR_MALLOC 	"Memory allocation failed\n"
 # define ERR_ARG_NUM	"Invalid number of arguments\n"
 # define ERR_ARG		"Invalid argument\n"
-# define ERR_MUTEX		"Mutex failed\n"
+# define ERR_MUTEX_I	"Mutex initialization failed\n"
 
 typedef struct s_philo
 {
@@ -53,8 +53,6 @@ typedef enum e_status
 	SLEEP = 2,
 	THINK = 3,
 	GOT_FORK = 4,
-	INIT = 1,
-	DESTROY = 2,
 	ERROR = -1,
 	SUCCESS = 0
 }	t_status;
@@ -68,6 +66,10 @@ void	init_philos(t_table *table);
 int		parse_input(char *argv[], int argc, t_table *table);
 size_t	ft_strlen(char *str);
 long	ft_atol(char *str);
+
+//Mutexes//
+int	init_mutexes(t_table *table);
+int	destroy_mutexes(t_table *table, int index);
 
 //Routines//
 void	philo_routine(void *arg);
