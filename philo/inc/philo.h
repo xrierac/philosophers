@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 16:39:52 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/03/13 14:06:23 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/03/14 11:04:40 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,14 @@ typedef enum e_status
 	THINK = 3,
 	GOT_FORK = 4,
 	INIT = 1,
-	DESTROY = 2
+	DESTROY = 2,
+	ERROR = -1,
+	SUCCESS = 0
 }	t_status;
 
 //Initialize//
-t_table	*init_table(int argc, char *argv[]);
-t_philo	**sit_philos(t_table *table);
+int		init_table(int argc, char *argv[], t_table *table);
+int		sit_philos(t_table *table);
 void	init_philos(t_table *table);
 
 //Parsing//
@@ -75,6 +77,6 @@ void	ft_putstr_fd(char *s, int fd);
 t_table	*free_table(t_table *table);
 
 //Exit//
-void	exit_error(char *str, t_table *table);
+int	ft_exit(char *s, t_table *table, t_status status);
 
 #endif
