@@ -6,11 +6,25 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 15:14:48 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/03/14 15:55:10 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/03/15 16:38:27 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
+
+int	destroy_forks(t_table *table, int index)
+{
+	int	i;
+
+	i = 1;
+	while (index > -1)
+	{
+		if (pthread_mutex_destroy(&table->forks_lock[index]))
+			i++;
+		index--;
+	}
+	return (i);
+}
 
 int	init_mutexes(t_table *table)
 {
