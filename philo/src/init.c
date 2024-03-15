@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:57:19 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/03/15 13:34:28 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/03/15 15:31:16 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	init_table(int argc, char *argv[], t_table *table)
 {
 	table->philos = NULL;
 	table->forks_lock = NULL;
+	table->finish = 0;
 	if (parse_input(argv, argc, table) < 0)
 		return (ft_exit(ERR_ARG, table, ERROR));
 	if (sit_philos(table) < 0)
