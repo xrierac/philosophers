@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 16:39:52 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/03/15 15:24:16 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/03/18 12:35:00 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int		collect_threads(t_table *table, int index);
 
 //Utils//
 long	get_time(void);
-void	precise_usleep(long time);
+void	precise_usleep_ms(long time);
 void	ft_putstr_fd(char *s, int fd);
 void	print_change(t_philo *philo, t_status status);
 
