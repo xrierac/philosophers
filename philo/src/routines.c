@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 14:04:28 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/03/15 17:13:30 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/03/18 15:46:41 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ static void	philo_eat(t_philo *philo)
 			pthread_mutex_lock(&philo->table->forks_lock[philo->forks[0]]);
 			print_change(philo, GOT_FORK);
 		}
-		philo->last_meal = get_time();
 		print_change(philo, EATING);
-		precise_usleep(philo->table->teat);
+		philo->last_meal = get_time();
+		precise_usleep_ms(philo->table->teat);
 		pthread_mutex_unlock(&philo->table->forks_lock[philo->forks[0]]);
 		pthread_mutex_unlock(&philo->table->forks_lock[philo->forks[1]]);
 		philo->n_meals++;
@@ -45,13 +45,23 @@ static void	philo_eat(t_philo *philo)
 static void	sleep_routine(t_philo *philo)
 {
 	print_change(philo, SLEEP);
-	precise_usleep(philo->table->tsleep);
+	precise_usleep_ms(philo->table->tsleep);
 }
 
 static void	think_routine(t_philo *philo)
 {
 	print_change(philo, THINK);
-	precise_usleep(1);
+	precise_usleep_ms(1);
+}
+
+static void	misanthrope(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->table->forks_lock[philo->forks[0]]);
+	print_change(philo, GOT_FORK);
+	precise_usleep_ms(philo->table->tdie);
+	philo->table->finish = 1;
+	print_change(philo, DIED);
+	pthread_mutex_unlock(&philo->table->forks_lock[philo->forks[0]]);
 }
 
 void	*main_routine(void *arg)
@@ -62,8 +72,10 @@ void	*main_routine(void *arg)
 	if (philo->table->tdie == 0)
 		return (NULL);
 	philo->last_meal = philo->table->start_time;
+	if (philo->table->n_phil == 1)
+		misanthrope(philo);
 	if (philo->id % 2)
-		precise_usleep(5);
+		precise_usleep_ms(5);
 	while (philo->table->finish == 0)
 	{
 		philo_eat(philo);
