@@ -55,8 +55,8 @@ void	init_philos(t_table *table)
 		table->philos[i]->n_meals = 0;
 		table->philos[i]->forks[0] = i;
 		table->philos[i]->forks[1] = i + 1;
-		if (i == 0)
-			table->philos[i]->forks[0] = table->n_phil;
+		if (i == table->n_phil - 1)
+			table->philos[i]->forks[1] = 0;
 		table->philos[i]->table = table;
 	}
 }
