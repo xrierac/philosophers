@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 16:39:52 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/03/20 15:23:59 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/03/20 16:21:02 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct s_philo
 	long			last_meal;
 	int				forks[2];
 	pthread_mutex_t	meal_lock;
+	pthread_mutex_t	time_lock;
 	t_table			*table;
 }	t_philo;
 
@@ -51,7 +52,6 @@ typedef struct s_table
 	long			start_time;
 	int				finish;
 	t_philo			**philos;
-	pthread_mutex_t	time_lock;
 	pthread_mutex_t	dead_lock;
 	pthread_mutex_t	*forks_lock;
 	pthread_t		watch;
