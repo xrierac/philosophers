@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 16:39:52 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/03/18 12:35:00 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/03/20 14:40:45 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # define ERR_COL_THR	"Closing threads failed\n"
 # define ERR_MUTEX_D	"Mutex destruction failed\n"
 
-typedef struct s_table t_table;
+typedef struct s_table	t_table;
 
 typedef struct s_philo
 {
@@ -43,15 +43,16 @@ typedef struct s_philo
 
 typedef struct s_table
 {
-	int		n_phil;
-	long	tdie;
-	long	teat;
-	long	tsleep;
-	long	must_eat;
-	long	start_time;
-	int		finish;
-	t_philo	**philos;
+	int				n_phil;
+	long			tdie;
+	long			teat;
+	long			tsleep;
+	long			must_eat;
+	long			start_time;
+	int				finish;
+	t_philo			**philos;
 	pthread_mutex_t	*forks_lock;
+	pthread_t		watch;
 }	t_table;
 
 typedef enum e_status
@@ -85,6 +86,7 @@ int		destroy_mutexes(t_table *table, int index);
 int		start_philo(t_table *table);
 void	*main_routine(void *arg);
 int		collect_threads(t_table *table, int index);
+void	*watchdog(void *arg);
 
 //Utils//
 long	get_time(void);
@@ -93,6 +95,6 @@ void	ft_putstr_fd(char *s, int fd);
 void	print_change(t_philo *philo, t_status status);
 
 //Exit//
-int	ft_exit(char *s, t_table *table, t_status status);
+int		ft_exit(char *s, t_table *table, t_status status);
 
 #endif
