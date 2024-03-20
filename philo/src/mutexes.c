@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 15:14:48 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/03/20 16:53:04 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/03/20 17:04:12 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,14 @@ int	destroy_mutexes(t_table *table, int index)
 
 	i = 0;
 	i += destroy_forks(table, index);
+	printf("%d\n", i);
 	i += destroy_meals(table, index);
+	printf("%d\n", i);
 	i += destroy_time(table, index);
+	printf("%d\n", i);
 	if (pthread_mutex_destroy(&table->dead_lock))
 		i++;
+	printf("%d\n", i);
 	return (i);
 }
 
@@ -43,7 +47,7 @@ int	destroy_meals(t_table *table, int index)
 {
 	while (index > -1)
 	{
-		if (pthread_mutex_init(&table->philos[index]->meal_lock))
+		if (pthread_mutex_destroy(&table->philos[index]->meal_lock))
 			return (1);
 		index--;
 	}
@@ -54,7 +58,7 @@ int	destroy_time(t_table *table, int index)
 {
 	while (index > -1)
 	{
-		if (pthread_mutex_init(&table->philos[index]->time_lock))
+		if (pthread_mutex_destroy(&table->philos[index]->time_lock))
 			return (1);
 		index--;
 	}
