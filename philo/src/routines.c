@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 14:04:28 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/03/20 11:45:12 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/03/20 14:42:11 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,66 +14,35 @@
 
 static void	philo_eat(t_philo *philo)
 {
-	if (get_time() - philo->last_meal <= philo->table->tdie)
+	if (philo->id % 2 == 0)
 	{
-		if (philo->id % 2 == 0)
-		{
-			pthread_mutex_lock(&philo->table->forks_lock[philo->forks[0]]);
-			print_change(philo, GOT_FORK);
-		}
-		pthread_mutex_lock(&philo->table->forks_lock[philo->forks[1]]);
+		pthread_mutex_lock(&philo->table->forks_lock[philo->forks[0]]);
 		print_change(philo, GOT_FORK);
-		if (philo->id % 2)
-		{
-			pthread_mutex_lock(&philo->table->forks_lock[philo->forks[0]]);
-			print_change(philo, GOT_FORK);
-		}
-		print_change(philo, EATING);
-		philo->last_meal = get_time();
-		precise_usleep_ms(philo->table->teat);
-		pthread_mutex_unlock(&philo->table->forks_lock[philo->forks[0]]);
-		pthread_mutex_unlock(&philo->table->forks_lock[philo->forks[1]]);
-		philo->n_meals++;
 	}
-	else
+	pthread_mutex_lock(&philo->table->forks_lock[philo->forks[1]]);
+	print_change(philo, GOT_FORK);
+	if (philo->id % 2)
 	{
-		pthread_mutex_lock(&philo->meal_lock);
-		philo->table->finish = 1;
-		pthread_mutex_lock(&philo->meal_lock);
-		print_change(philo, DIED);
+		pthread_mutex_lock(&philo->table->forks_lock[philo->forks[0]]);
+		print_change(philo, GOT_FORK);
 	}
+	print_change(philo, EATING);
+	philo->last_meal = get_time();
+	precise_usleep_ms(philo->table->teat);
+	pthread_mutex_unlock(&philo->table->forks_lock[philo->forks[0]]);
+	pthread_mutex_unlock(&philo->table->forks_lock[philo->forks[1]]);
 }
 
 static void	sleep_routine(t_philo *philo)
 {
-	if (get_time() - philo->last_meal >= philo->table->tdie)
-	{
-		pthread_mutex_lock(&philo->meal_lock);
-		philo->table->finish = 1;
-		pthread_mutex_lock(&philo->meal_lock);
-		print_change(philo, DIED);
-	}
-	else
-	{
-		print_change(philo, SLEEP);
-		precise_usleep_ms(philo->table->tsleep);
-	}
+	print_change(philo, SLEEP);
+	precise_usleep_ms(philo->table->tsleep);
 }
 
 static void	think_routine(t_philo *philo)
 {
-	if (get_time() - philo->last_meal >= philo->table->tdie)
-	{
-		pthread_mutex_lock(&philo->meal_lock);
-		philo->table->finish = 1;
-		pthread_mutex_lock(&philo->meal_lock);
-		print_change(philo, DIED);
-	}
-	else
-	{
-		print_change(philo, THINK);
-		precise_usleep_ms(philo->table->teat - philo->table->tsleep);
-	}
+	print_change(philo, THINK);
+	precise_usleep_ms(philo->table->teat - philo->table->tsleep);
 }
 
 static void	misanthrope(t_philo *philo)
@@ -82,7 +51,6 @@ static void	misanthrope(t_philo *philo)
 	print_change(philo, GOT_FORK);
 	precise_usleep_ms(philo->table->tdie);
 	philo->table->finish = 1;
-	print_change(philo, DIED);
 	pthread_mutex_unlock(&philo->table->forks_lock[philo->forks[0]]);
 }
 
