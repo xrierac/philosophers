@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:08:46 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/03/20 14:41:12 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/03/20 15:00:36 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	start_philo(t_table *table)
 	{
 		if (pthread_create(&table->philos[i]->thread, NULL,
 				&main_routine, table->philos[i]))
-			return (collect_threads(table, i));
+			return (collect_threads(table, i - 1));
 	}
 	usleep(50000);
 	if (pthread_create(&table->watch, NULL, &watchdog, table))
