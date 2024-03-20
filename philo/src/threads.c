@@ -6,13 +6,13 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:08:46 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/03/15 16:28:06 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/03/20 11:48:54 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
 
-int	collect_threads(t_table *table, int	index)
+int	collect_threads(t_table *table, int index)
 {
 	while (index > -1)
 	{
@@ -33,8 +33,8 @@ int	start_philo(t_table *table)
 		return (ft_exit(ERR_TIME, table, ERROR));
 	while (++i < table->n_phil)
 	{
-		if (pthread_create(&table->philos[i]->thread, NULL, 
-					&main_routine, table->philos[i]))
+		if (pthread_create(&table->philos[i]->thread, NULL,
+				&main_routine, table->philos[i]))
 			return (collect_threads(table, i));
 	}
 	return (0);

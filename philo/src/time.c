@@ -6,15 +6,15 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:15:58 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/03/18 12:34:05 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/03/20 11:49:34 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philo.h"
 
-long	get_time()
+long	get_time(void)
 {
-	struct timeval tv;
+	struct timeval	tv;
 
 	if (gettimeofday(&tv, NULL) == -1)
 		return (-1);
