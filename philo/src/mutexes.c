@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 15:14:48 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/03/20 11:39:15 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/03/20 15:29:33 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,16 @@ int	init_mutexes(t_table *table)
 	while (i < table->n_phil)
 	{
 		if (pthread_mutex_init(&table->philos[i]->meal_lock, NULL))
-			return (destroy_mutexes(table, i));
+			return (destroy_mutexes(table, i - 1, 1));
 		i++;
 	}
+	if (pthread_mutex_init(&table->time_lock, NULL)
+		  || pthread_mutex_init(&table->dead_lock, NULL))
+		  return (destroy_mutexes(table, i - 1, 0));
 	return (0);
 }
 
-int	destroy_mutexes(t_table *table, int index)
+int	destroy_mutexes(t_table *table, int index, int flag)
 {
 	while (index > -1)
 	{
@@ -48,5 +51,8 @@ int	destroy_mutexes(t_table *table, int index)
 			return (-2);
 		index--;
 	}
+	if (flag == 0 && (pthread_mutex_destroy(&table->time_lock)
+			|| pthread_mutex_destroy(&table->dead_lock)))
+			return (-2);
 	return (1);
 }

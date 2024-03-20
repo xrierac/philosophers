@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 16:41:00 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/03/20 14:27:27 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/03/20 15:27:39 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,6 @@ int	main(int argc, char *argv[])
 	collect_threads(&table, table.n_phil - 1);
 	pthread_join(table.watch, NULL);
 	destroy_forks(&table, table.n_phil - 1);
+	destroy_mutexes(&table, table.n_phil - 1, 0);
 	return (ft_exit(NULL, &table, SUCCESS));
 }

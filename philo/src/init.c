@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 11:57:19 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/03/15 15:31:16 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/03/20 15:26:48 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ int	init_table(int argc, char *argv[], t_table *table)
 	if (sit_philos(table) < 0)
 		return (ft_exit(ERR_MALLOC, table, ERROR));
 	if (init_forks(table) != 0)
+		return (ft_exit(ERR_MUTEX_I, table, ERROR));
+	if (init_mutexes(table) != 0)
 		return (ft_exit(ERR_MUTEX_I, table, ERROR));
 	return (0);
 }
