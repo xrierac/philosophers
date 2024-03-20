@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 14:04:28 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/03/20 15:10:29 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/03/20 16:05:27 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,9 @@ static void	philo_eat(t_philo *philo)
 	precise_usleep_ms(philo->table->teat);
 	pthread_mutex_unlock(&philo->table->forks_lock[philo->forks[0]]);
 	pthread_mutex_unlock(&philo->table->forks_lock[philo->forks[1]]);
-}
-
-static void	sleep_routine(t_philo *philo)
-{
+	pthread_mutex_lock(&philo->meal_lock);
+	philo->n_meals++;
+	pthread_mutex_unlock(&philo->meal_lock);
 	print_change(philo, SLEEP);
 	precise_usleep_ms(philo->table->tsleep);
 }
@@ -44,7 +43,7 @@ static void	sleep_routine(t_philo *philo)
 static void	think_routine(t_philo *philo)
 {
 	print_change(philo, THINK);
-	precise_usleep_ms(philo->table->teat - philo->table->tsleep);
+	precise_usleep_ms(philo->table->teat - (philo->table->tsleep / 2));
 }
 
 static void	misanthrope(t_philo *philo)
@@ -52,7 +51,9 @@ static void	misanthrope(t_philo *philo)
 	pthread_mutex_lock(&philo->table->forks_lock[philo->forks[0]]);
 	print_change(philo, GOT_FORK);
 	precise_usleep_ms(philo->table->tdie);
+	pthread_mutex_lock(&philo->table->dead_lock);
 	philo->table->finish = 1;
+	pthread_mutex_unlock(&philo->table->dead_lock);
 	pthread_mutex_unlock(&philo->table->forks_lock[philo->forks[0]]);
 }
 
@@ -67,17 +68,14 @@ void	*main_routine(void *arg)
 	if (philo->table->n_phil == 1)
 		misanthrope(philo);
 	if (philo->id % 2)
-		precise_usleep_ms(5);
+		precise_usleep_ms(philo->table->teat);
 	while (philo->table->finish == 0)
 	{
 		philo_eat(philo);
+		think_routine(philo);
 		if (philo->n_meals >= philo->table->must_eat
 			&& philo->table->must_eat > 0)
 			break ;
-		if (philo->table->finish == 0)
-			sleep_routine(philo);
-		if (philo->table->finish == 0)
-			think_routine(philo);
 	}
 	return (NULL);
 }
