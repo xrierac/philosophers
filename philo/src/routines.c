@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 14:04:28 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/03/20 14:42:11 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/03/20 15:10:29 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,9 @@ static void	philo_eat(t_philo *philo)
 		print_change(philo, GOT_FORK);
 	}
 	print_change(philo, EATING);
+	pthread_mutex_lock(&philo->table->time_lock);
 	philo->last_meal = get_time();
+	pthread_mutex_unlock(&philo->table->time_lock);
 	precise_usleep_ms(philo->table->teat);
 	pthread_mutex_unlock(&philo->table->forks_lock[philo->forks[0]]);
 	pthread_mutex_unlock(&philo->table->forks_lock[philo->forks[1]]);
