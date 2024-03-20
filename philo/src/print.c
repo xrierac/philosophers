@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 11:44:29 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/03/20 11:43:54 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/03/20 12:19:00 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,9 @@ void	print_change(t_philo *philo, t_status status)
 				- philo->table->start_time, philo->id);
 	}
 	if (status == DIED)
+	{
+		usleep(100);
 		printf("%ld %d died\n", get_time() - philo->table->start_time,
 			philo->id);
+	}
 }
