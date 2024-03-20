@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 11:56:03 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/03/13 09:57:25 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/03/20 11:40:48 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ int	parse_input(char *argv[], int argc, t_table *table)
 	table->must_eat = -1;
 	if (argc == 6)
 		table->must_eat = get_parse(argv[5]);
-	if (table->n_phil <= 0 || table->tdie < 0 || table->teat < 0 || 
-			table->tsleep < 0 || table->must_eat < -1)
+	if (table->n_phil <= 0 || table->tdie < 0 || table->teat < 0
+		|| table->tsleep < 0 || table->must_eat < -1)
 		return (-1);
 	return (0);
 }
