@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 16:08:46 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/03/21 10:01:44 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/03/21 11:59:44 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	start_philo(t_table *table)
 
 	i = -1;
 	if (table->must_eat == 0)
-		return (-1);
+		return (ft_exit(ERR_ARG, table, ERROR));
 	table->start_time = get_time();
 	if (table->start_time < 0)
 		return (ft_exit(ERR_TIME, table, ERROR));
