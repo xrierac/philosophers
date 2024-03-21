@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/14 15:14:48 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/03/20 17:04:12 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/03/21 09:22:55 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,10 @@ int	destroy_mutexes(t_table *table, int index)
 
 	i = 0;
 	i += destroy_forks(table, index);
-	printf("%d\n", i);
 	i += destroy_meals(table, index);
-	printf("%d\n", i);
 	i += destroy_time(table, index);
-	printf("%d\n", i);
 	if (pthread_mutex_destroy(&table->dead_lock))
 		i++;
-	printf("%d\n", i);
 	return (i);
 }
 
