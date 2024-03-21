@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 11:44:29 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/03/20 12:19:00 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/03/21 11:28:34 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	print_change(t_philo *philo, t_status status)
 {
+	pthread_mutex_lock(&philo->table->dead_lock);
 	if (philo->table->finish == 0)
 	{
 		if (status == GOT_FORK)
@@ -29,6 +30,7 @@ void	print_change(t_philo *philo, t_status status)
 			printf("%ld %d is sleeping\n", get_time()
 				- philo->table->start_time, philo->id);
 	}
+	pthread_mutex_unlock(&philo->table->dead_lock);
 	if (status == DIED)
 	{
 		usleep(100);
