@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 14:04:28 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/03/20 16:59:58 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/03/21 11:32:04 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,10 @@ static void	philo_eat(t_philo *philo)
 static void	think_routine(t_philo *philo)
 {
 	print_change(philo, THINK);
-	precise_usleep_ms(philo->table->teat - (philo->table->tsleep / 2));
+	pthread_mutex_lock(&philo->time_lock);
+	precise_usleep_ms((philo->table->tdie - (get_time() - philo->last_meal)
+			- philo->table->teat) / 2);
+	pthread_mutex_unlock(&philo->time_lock);
 }
 
 static void	misanthrope(t_philo *philo)
@@ -54,7 +57,20 @@ static void	misanthrope(t_philo *philo)
 	pthread_mutex_lock(&philo->table->dead_lock);
 	philo->table->finish = 1;
 	pthread_mutex_unlock(&philo->table->dead_lock);
+	print_change(philo, DIED);
 	pthread_mutex_unlock(&philo->table->forks_lock[philo->forks[0]]);
+}
+
+int	get_death_status(t_table *table)
+{
+	pthread_mutex_lock(&table->dead_lock);
+	if (table->finish == 1)
+	{
+		pthread_mutex_unlock(&table->dead_lock);
+		return (1);
+	}
+	pthread_mutex_unlock(&table->dead_lock);
+	return (0);
 }
 
 void	*main_routine(void *arg)
@@ -64,12 +80,14 @@ void	*main_routine(void *arg)
 	philo = arg;
 	if (philo->table->tdie == 0)
 		return (NULL);
+	pthread_mutex_lock(&philo->time_lock);
 	philo->last_meal = philo->table->start_time;
+	pthread_mutex_unlock(&philo->time_lock);
 	if (philo->table->n_phil == 1)
 		misanthrope(philo);
 	if (philo->id % 2)
 		precise_usleep_ms(philo->table->teat);
-	while (philo->table->finish == 0)
+	while (get_death_status(philo->table) == 0)
 	{
 		philo_eat(philo);
 		think_routine(philo);
