@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 16:39:52 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/03/20 16:59:30 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/03/21 11:19:28 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ int		destroy_forks(t_table *table, int index);
 int		destroy_mutexes(t_table *table, int index);
 int		destroy_meals(t_table *table, int index);
 int		destroy_time(t_table *table, int index);
+int		get_death_status(t_table *table);
 
 //Threads//
 int		start_philo(t_table *table);
