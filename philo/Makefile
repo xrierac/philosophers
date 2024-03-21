@@ -3,7 +3,7 @@ NAME	:= philo
 #Compiler options#
 
 CC		:= cc
-CFLAGS	:= -Wextra -Wall -Werror -g
+CFLAGS	:= -Wextra -Wall -Werror
 
 INC_DIR  := ./inc
 SRC_DIR  := ./src
@@ -16,7 +16,7 @@ OBJS	:= ${SRCS:.c=.o}
 	@$(CC) $(CFLAGS) -o $@ -c $< && printf "Compiling: $(notdir $<)\n"
 
 $(NAME): $(OBJS)
-	@$(CC) $(OBJS) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 
 all: $(NAME)
 
