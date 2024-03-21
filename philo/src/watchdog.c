@@ -6,7 +6,7 @@
 /*   By: xriera-c <xriera-c@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 14:04:21 by xriera-c          #+#    #+#             */
-/*   Updated: 2024/03/20 14:53:31 by xriera-c         ###   ########.fr       */
+/*   Updated: 2024/03/21 09:23:39 by xriera-c         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@ static void	check_death(t_table *table)
 	i = -1;
 	while (++i < table->n_phil)
 	{
-		pthread_mutex_lock(&table->philos[i]->meal_lock);
+		pthread_mutex_lock(&table->philos[i]->time_lock);
 		if (get_time() - table->philos[i]->last_meal >= table->tdie
 			&& table->finish == 0)
 		{
 			table->finish = 1;
 			print_change(table->philos[i], DIED);
 		}
-		pthread_mutex_unlock(&table->philos[i]->meal_lock);
+		pthread_mutex_unlock(&table->philos[i]->time_lock);
 	}
 }
 
